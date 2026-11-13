@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="以家屬為中心的氣切共同決策衛教與討論工具">
+<title>家屬氣切決策輔助平台｜Tracheostomy Decision Aid</title>
+<style>
+:root{--navy:#173b57;--blue:#286b91;--teal:#287d78;--ink:#243746;--muted:#617482;--line:#dce5eb;--bg:#f4f7f9;--white:#fff;--soft:#eaf2f7;--gold:#a86e19;--goldbg:#fff6e8;--green:#276c54;--greenbg:#eaf5ef;--shadow:0 8px 26px rgba(25,55,75,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;line-height:1.65}
+header{background:linear-gradient(120deg,#173b57,#286b91);color:white;padding:28px 20px 24px}
+.wrap{max-width:1100px;margin:auto;padding:0 18px}
+.topline{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+h1{font-size:clamp(1.65rem,4vw,2.45rem);line-height:1.25;margin:8px 0}
+.subtitle{opacity:.9;max-width:760px;margin:0}
+.notice{margin:18px auto 0;background:#fff8e9;color:#674919;border:1px solid #f0dfbd;border-radius:12px;padding:12px 15px;font-size:.92rem}
+.layout{display:grid;grid-template-columns:255px minmax(0,1fr);gap:22px;margin:24px auto 50px}
+nav{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;height:max-content;position:sticky;top:14px;box-shadow:var(--shadow)}
+nav h2{font-size:.92rem;margin:3px 8px 10px;color:var(--muted)}
+.navbtn{display:flex;gap:10px;align-items:center;width:100%;border:0;background:transparent;text-align:left;padding:11px 9px;border-radius:10px;color:var(--ink);cursor:pointer;font:inherit}
+.navbtn .num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#edf2f5;color:#526674;font-size:.82rem;flex:none}
+.navbtn.active{background:var(--soft);color:var(--navy);font-weight:700}.navbtn.active .num{background:var(--blue);color:white}
+.navbtn.done .num{background:var(--greenbg);color:var(--green)}
+main{min-width:0}.panel{display:none;background:white;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,30px);box-shadow:var(--shadow)}
+.panel.active{display:block}.eyebrow{color:var(--blue);font-size:.78rem;font-weight:750;letter-spacing:.08em}
+h2{font-size:1.45rem;line-height:1.35;margin:5px 0 8px;color:var(--navy)}h3{font-size:1.08rem;color:var(--navy);margin:20px 0 8px}
+.lead{color:var(--muted);margin:0 0 20px}.callout{padding:14px 16px;border-radius:12px;background:var(--soft);margin:16px 0}.callout.gold{background:var(--goldbg);color:#684b20}.callout.green{background:var(--greenbg);color:#245b47}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff}.card h3{margin:0 0 7px}.card p{margin:0;color:var(--muted);font-size:.94rem}
+label{display:block;font-weight:650;margin:12px 0 5px}input[type=text],input[type=date],input[type=number],textarea,select{width:100%;border:1px solid #cbd8e0;border-radius:9px;padding:11px 12px;font:inherit;color:var(--ink);background:white}
+textarea{min-height:88px;resize:vertical}.hint{font-size:.83rem;color:var(--muted);margin-top:4px}
+.options{display:grid;gap:8px;margin:9px 0 15px}.option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-weight:450;cursor:pointer}.option:has(input:checked){border-color:var(--blue);background:#f1f7fa}.option input{margin-top:5px;accent-color:var(--blue)}
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:10px 0 16px}.scale label{margin:0;border:1px solid var(--line);border-radius:9px;padding:9px 5px;text-align:center;font-size:.84rem;font-weight:500;cursor:pointer}.scale input{display:block;margin:0 auto 4px;accent-color:var(--blue)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}th,td{border:1px solid var(--line);padding:11px;vertical-align:top;text-align:left}th{background:#edf3f6;color:var(--navy)}td:first-child{font-weight:650;width:22%}
+ul{padding-left:1.25rem;margin:8px 0}li{margin:5px 0}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:24px;padding-top:17px;border-top:1px solid var(--line)}
+button.primary,button.secondary{border:0;border-radius:10px;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer}
+button.primary{background:var(--blue);color:white}button.secondary{background:#edf2f5;color:var(--navy)}button:disabled{opacity:.4;cursor:not-allowed}
+.progress{height:7px;background:#e8eef2;border-radius:99px;overflow:hidden;margin:10px 0 20px}.progress span{display:block;height:100%;width:16.66%;background:var(--teal);transition:width .2s}
+.summary{background:#f8fafb;border:1px solid var(--line);border-radius:12px;padding:15px;margin:12px 0;white-space:pre-wrap}
+.small{font-size:.82rem;color:var(--muted)}.tag{display:inline-block;background:#edf3f6;color:#34556b;padding:3px 9px;border-radius:99px;font-size:.78rem;font-weight:700}
+footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem}
+@media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static}.navlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.navbtn{font-size:.88rem;padding:8px}.grid3{grid-template-columns:1fr}}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}.scale{gap:3px}.scale label{font-size:.72rem;padding:7px 2px}.panel{padding:17px}.navlist{grid-template-columns:1fr 1fr}td:first-child{width:28%}table{font-size:.82rem}th,td{padding:8px}}
+@media print{body{background:white}.layout{display:block;margin:0}.layout nav,.actions,header .notice,footer{display:none!important}.panel{display:none!important;box-shadow:none;border:0;padding:0}.panel#step6{display:block!important}header{background:white;color:#173b57;padding:0 0 15px}.wrap{max-width:none}.progress{display:none}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="topline">Family-Centered Decision Aid</div>
+  <h1>家屬氣切決策輔助平台</h1>
+  <p class="subtitle">陪伴您了解氣切與其他可能選項，整理在意的事情，並與醫療團隊一起討論。</p>
+  <div class="notice"><strong>請先了解：</strong>這個工具不會替您決定要不要氣切，也不會用分數判定哪個選擇比較好。氣切與不氣切都需要依病人的實際狀況，由醫療團隊說明可行選項及風險。</div>
+ </div>
+</header>
+<div class="wrap layout">
+<nav>
+ <h2>決策旅程</h2>
+ <div class="progress"><span id="progressBar"></span></div>
+ <div class="navlist">
+  <button class="navbtn active" data-step="1"><span class="num">1</span>我現在面臨什麼問題</button>
+  <button class="navbtn" data-step="2"><span class="num">2</span>認識氣切</button>
+  <button class="navbtn" data-step="3"><span class="num">3</span>比較可能選項</button>
+  <button class="navbtn" data-step="4"><span class="num">4</span>病人與家屬在意什麼</button>
+  <button class="navbtn" data-step="5"><span class="num">5</span>想問醫療團隊的問題</button>
+  <button class="navbtn" data-step="6"><span class="num">6</span>共同決策摘要</button>
+ </div>
+ <p class="small">可隨時返回修改答案。未填寫的題目不會被視為否定或同意。</p>
+</nav>
+<main>
+<section class="panel active" id="step1">
+ <div class="eyebrow">STEP 01 · UNDERSTAND THE SITUATION</div><h2>我現在面臨什麼問題？</h2>
+ <p class="lead">當病人需要較長時間使用呼吸器時，醫療團隊可能會提出氣切。先了解目前情況，有助於您提出適合的問題。</p>
+ <div class="callout"><strong>氣切是什麼？</strong><br>氣切是由醫療人員在頸部建立通往氣管的開口，放入氣切管，作為呼吸道的一種方式。是否適合，需依病人的疾病、預期治療方向及個別風險評估。</div>
+ <div class="grid2">
+  <div><label for="patientAge">病人年齡（可不填）</label><input id="patientAge" type="number" min="0" max="120" placeholder="例如：72"></div>
+  <div><label for="diagnosis">主要疾病或診斷（可不填）</label><input id="diagnosis" type="text" placeholder="例如：肺炎、腦中風、神經肌肉疾病"></div>
+  <div><label for="intubationDate">插管日期（可不填）</label><input id="intubationDate" type="date"></div>
+  <div><label for="discussionDate">本次討論日期</label><input id="discussionDate" type="date"></div>
+ </div>
+ <h3>醫療團隊目前如何說明氣切的原因？</h3>
+ <div class="options">
+  <label class="option"><input type="checkbox" name="reason" value="預期需要較長時間呼吸器支持">預期需要較長時間呼吸器支持</label>
+  <label class="option"><input type="checkbox" name="reason" value="目前無法安全移除經口氣管內管">目前無法安全移除經口氣管內管</label>
+  <label class="option"><input type="checkbox" name="reason" value="需要協助清除呼吸道分泌物">需要協助清除呼吸道分泌物</label>
+  <label class="option"><input type="checkbox" name="reason" value="其他或尚未清楚">其他或尚未清楚</label>
+ </div>
+ <label for="reasonOther">醫療團隊的說明／我還不清楚的地方</label><textarea id="reasonOther" placeholder="請記下醫師或 RT 的說明，也可以先留白。"></textarea>
+ <div class="callout gold"><strong>請務必向醫療團隊確認：</strong>目前是否仍有機會移除氣管內管？如果暫時不氣切，短期與接下來的人工氣道計畫是什麼？</div>
+ <div class="actions"><span></span><button class="primary" onclick="go(2)">下一步：認識氣切 →</button></div>
+</section>
+
+<section class="panel" id="step2">
+ <div class="eyebrow">STEP 02 · LEARN ABOUT TRACHEOSTOMY</div><h2>什麼是氣切？</h2>
+ <p class="lead">氣切是一種建立人工呼吸道的方式，不等於病人一定要終身使用呼吸器，也不代表一定能成功脫離呼吸器。</p>
+ <div class="grid2">
+  <article class="card"><h3>氣切可能帶來什麼改變？</h3><ul><li>呼吸道由頸部的氣切管維持。</li><li>相較經口插管，可能減少口腔及喉部受到管路壓迫的不適。</li><li>部分病人可能較容易進行口腔照護及分泌物處理。</li><li>可依病況評估呼吸器脫離訓練。</li></ul></article>
+  <article class="card"><h3>氣切不代表什麼？</h3><ul><li>不代表一定可以脫離呼吸器。</li><li>不代表一定能恢復正常說話或吞嚥。</li><li>不代表一定需要終身留置氣切管。</li><li>不代表原本疾病就會因此改善。</li></ul></article>
+ </div>
+ <h3>氣切後可能需要哪些照護？</h3>
+ <ul><li>保持氣切管通暢，依需要進行抽痰與管路清潔。</li><li>觀察呼吸狀況、分泌物、傷口及感染徵象。</li><li>依病況評估吞嚥、發聲及呼吸器脫離可能性。</li><li>家屬若參與照護，需接受照護訓練並了解緊急處理流程。</li></ul>
+ <h3>氣切可能的風險</h3>
+ <p>可能包括出血、感染、傷口問題、氣切管阻塞或移位，以及氣管相關併發症。實際風險會因病人狀況、手術方式及照護條件而不同，請醫療團隊說明個別風險。</p>
+ <div class="callout gold"><strong>我想確認自己是否了解：</strong><div class="options">
+  <label class="option"><input type="checkbox" name="understand" value="了解氣切不保證脫離呼吸器">我了解氣切不保證能脫離呼吸器。</label>
+  <label class="option"><input type="checkbox" name="understand" value="了解氣切後可能需要長期照護">我了解氣切後可能需要長期管路照護。</label>
+  <label class="option"><input type="checkbox" name="understand" value="了解說話吞嚥能力需個別評估">我了解說話與吞嚥能力需要個別評估。</label>
+ </div></div>
+ <div class="actions"><button class="secondary" onclick="go(1)">← 上一步</button><button class="primary" onclick="go(3)">下一步：比較可能選項 →</button></div>
+</section>
+
+<section class="panel" id="step3">
+ <div class="eyebrow">STEP 03 · COMPARE OPTIONS</div><h2>接受氣切與暫不氣切，有什麼不同？</h2>
+ <p class="lead">以下是一般性資訊，並非每位病人都適用。請醫療團隊依病況說明「暫不氣切」實際可行的替代方案。</p>
+ <table>
+  <thead><tr><th>比較面向</th><th>接受氣切</th><th>暫不氣切</th></tr></thead>
+  <tbody>
+   <tr><td>呼吸道方式</td><td>經頸部氣切管建立呼吸道。</td><td>若仍需人工氣道，可能暫時維持經口氣管內管；是否有其他選項需由醫療團隊評估。</td></tr>
+   <tr><td>可能的好處</td><td>可能減少部分經口插管的不適，並利於部分照護及脫離訓練。</td><td>可暫時避免氣切手術及其相關風險。</td></tr>
+   <tr><td>可能的負擔</td><td>需承擔手術風險及氣切管照護需求。</td><td>長期經口插管也有不適及口腔、喉部與氣道併發症風險；不能視為可無限期維持。</td></tr>
+   <tr><td>呼吸器使用</td><td>可能仍需呼吸器，也可能依病況逐步嘗試脫離。</td><td>若仍無法自主呼吸，可能持續需要呼吸器支持。</td></tr>
+   <tr><td>後續計畫</td><td>需討論氣切照護、脫離訓練及後續照護安排。</td><td>需明確討論短期人工氣道計畫、再次評估時間及治療目標。</td></tr>
+  </tbody>
+ </table>
+ <div class="callout gold"><strong>非常重要：</strong>「暫不氣切」不等於「不治療」，也不等於「撤除呼吸器」。若病人不希望接受某些維生治療，這是另一個需要獨立且深入討論的治療目標與醫療決策，請勿將兩者混為一談。</div>
+ <h3>我希望醫療團隊進一步說明</h3>
+ <div class="options">
+  <label class="option"><input type="checkbox" name="compareQ" value="不氣切時可行的短期人工氣道計畫">如果暫不氣切，短期人工氣道計畫是什麼？</label>
+  <label class="option"><input type="checkbox" name="compareQ" value="病人目前氣切手術的個別風險">病人目前接受氣切的個別風險有多高？</label>
+  <label class="option"><input type="checkbox" name="compareQ" value="氣切後脫離呼吸器的可能性與不確定性">氣切後脫離呼吸器的可能性及不確定性？</label>
+  <label class="option"><input type="checkbox" name="compareQ" value="若暫緩決定，何時需要重新評估">如果暫緩決定，何時需要重新評估？</label>
+ </div>
+ <div class="actions"><button class="secondary" onclick="go(2)">← 上一步</button><button class="primary" onclick="go(4)">下一步：想想我們重視什麼 →</button></div>
+</section>
+
+<section class="panel" id="step4">
+ <div class="eyebrow">STEP 04 · WHAT MATTERS TO US</div><h2>病人與家屬最在意什麼？</h2>
+ <p class="lead">這裡沒有標準答案。請依您所了解的病人想法回答；若不清楚，可以選擇「不知道／尚未討論」。</p>
+ <label>1. 病人過去是否曾表達對氣切、長期呼吸器或生活品質的想法？</label>
+ <div class="options"><label class="option"><input type="radio" name="patientWish" value="曾明確表達，內容已知">曾明確表達，內容已知</label><label class="option"><input type="radio" name="patientWish" value="曾談過，但不確定意思">曾談過，但不確定意思</label><label class="option"><input type="radio" name="patientWish" value="沒有談過／不知道">沒有談過／不知道</label></div>
+ <label for="wishDetail">病人曾表達的想法（若有）</label><textarea id="wishDetail" placeholder="例如：對長期依賴呼吸器、生活品質或醫療處置的看法。"></textarea>
+ <label>2. 您認為病人最重視哪些事情？（可複選）</label>
+ <div class="options"><label class="option"><input type="checkbox" name="values" value="盡可能延長生命">盡可能延長生命</label><label class="option"><input type="checkbox" name="values" value="恢復自主呼吸及活動能力">恢復自主呼吸及活動能力</label><label class="option"><input type="checkbox" name="values" value="舒適、減少痛苦">舒適、減少痛苦</label><label class="option"><input type="checkbox" name="values" value="保有溝通及與家人互動的機會">保有溝通及與家人互動的機會</label><label class="option"><input type="checkbox" name="values" value="避免長期醫療處置或照護負擔">避免長期醫療處置或照護負擔</label><label class="option"><input type="checkbox" name="values" value="其他／尚不清楚">其他／尚不清楚</label></div>
+ <label>3. 目前家屬最擔心的事情是？（可複選）</label>
+ <div class="options"><label class="option"><input type="checkbox" name="concerns" value="手術及麻醉風險">手術及麻醉風險</label><label class="option"><input type="checkbox" name="concerns" value="可能長期依賴呼吸器">可能長期依賴呼吸器</label><label class="option"><input type="checkbox" name="concerns" value="病人的痛苦與生活品質">病人的痛苦與生活品質</label><label class="option"><input type="checkbox" name="concerns" value="長期照護人力與費用">長期照護人力與費用</label><label class="option"><input type="checkbox" name="concerns" value="不知道病人未來會如何">不知道病人未來會如何</label><label class="option"><input type="checkbox" name="concerns" value="家人之間意見不同">家人之間意見不同</label></div>
+ <label>4. 目前您對氣切的想法</label>
+ <div class="options"><label class="option"><input type="radio" name="preference" value="傾向接受氣切">傾向接受氣切</label><label class="option"><input type="radio" name="preference" value="傾向暫不接受氣切">傾向暫不接受氣切</label><label class="option"><input type="radio" name="preference" value="尚未決定，需要更多資訊">尚未決定，需要更多資訊</label><label class="option"><input type="radio" name="preference" value="需要與病人／家人／醫療團隊再討論">需要與病人／家人／醫療團隊再討論</label></div>
+ <div class="callout">家屬可以有自己的擔心與感受，但若病人具備決策能力，應以病人充分理解後的自主意願為核心。若病人目前無法表達，請與醫療團隊討論其過去意願、價值觀及適用的代理決策程序。</div>
+ <div class="actions"><button class="secondary" onclick="go(3)">← 上一步</button><button class="primary" onclick="go(5)">下一步：整理要問的問題 →</button></div>
+</section>
+
+<section class="panel" id="step5">
+ <div class="eyebrow">STEP 05 · QUESTIONS FOR THE CARE TEAM</div><h2>我想問醫師或 RT 的問題</h2>
+ <p class="lead">您不需要一次弄懂所有醫療資訊。可以把不清楚的地方記下來，帶到下一次家庭會議或醫療團隊討論。</p>
+ <div class="options">
+  <label class="option"><input type="checkbox" name="questions" value="為什麼現在建議討論氣切？">為什麼現在建議討論氣切？是否有時間上的急迫性？</label>
+  <label class="option"><input type="checkbox" name="questions" value="目前病人接受氣切的個別風險是什麼？">以病人目前狀況，氣切手術的個別風險是什麼？</label>
+  <label class="option"><input type="checkbox" name="questions" value="氣切後仍需呼吸器的可能性與評估方式">氣切後仍需呼吸器的可能性？如何評估脫離？</label>
+  <label class="option"><input type="checkbox" name="questions" value="不氣切時的替代方案及期限">如果暫不氣切，替代方案是什麼？可以維持多久？</label>
+  <label class="option"><input type="checkbox" name="questions" value="氣切後說話、吞嚥及互動的可能性">氣切後是否可能說話、吞嚥或與家人互動？</label>
+  <label class="option"><input type="checkbox" name="questions" value="手術後可能的恢復情形及長期照護需求">手術後可能的恢復情形及長期照護需求？</label>
+  <label class="option"><input type="checkbox" name="questions" value="若病人不希望長期依賴生命維持治療，如何討論照護目標">若病人不希望長期依賴生命維持治療，如何討論照護目標？</label>
+ </div>
+ <label for="customQuestions">其他想詢問的問題</label><textarea id="customQuestions" placeholder="請輸入您自己的問題……"></textarea>
+ <label for="nextMeeting">預計再次討論日期（可不填）</label><input id="nextMeeting" type="date">
+ <div class="callout gold">若醫療團隊認為需要在短時間內決定，請直接詢問決策期限、原因，以及是否有安全的討論時間。不要因為填寫本工具而延誤必要的醫療溝通。</div>
+ <div class="actions"><button class="secondary" onclick="go(4)">← 上一步</button><button class="primary" onclick="go(6);renderSummary()">產生共同決策摘要 →</button></div>
+</section>
+
+<section class="panel" id="step6">
+ <div class="eyebrow">STEP 06 · SHARED DECISION SUMMARY</div><h2>我們目前的共同決策摘要</h2>
+ <p class="lead">這份摘要協助家屬與醫療團隊確認彼此理解，不是手術同意書、醫囑或自動推薦結果。</p>
+ <div id="summaryContent" class="summary">請按下方「更新摘要」整理目前填寫的內容。</div>
+ <div class="callout"><strong>下一步：</strong>請將這份摘要帶給醫師及 RT 討論，確認病人的個別風險、替代方案、決策期限及後續計畫。若資訊仍不足，選擇「尚未決定」也是可以被尊重的狀態。</div>
+ <div class="actions"><button class="secondary" onclick="go(5)">← 返回修改</button><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderSummary()">更新摘要</button><button class="primary" onclick="window.print()">列印／另存 PDF</button></div></div>
+</section>
+</main>
+</div>
+<footer>家屬氣切決策輔助平台 · 教育與溝通用途 · V1.0 Prototype<br>請勿輸入病人姓名、病歷號碼或其他可識別個人身分的資料。此原型不會將答案上傳或儲存至伺服器。</footer>
+<script>
+let current=1;
+function go(n){current=n;document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='step'+n));document.querySelectorAll('.navbtn').forEach(b=>{let s=+b.dataset.step;b.classList.toggle('active',s===n);b.classList.toggle('done',s<n)});document.getElementById('progressBar').style.width=(n/6*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.step)));
+function val(id){return document.getElementById(id)?.value?.trim()||'未填寫'}
+function checked(name){return [...document.querySelectorAll(`[name="${name}"]:checked`)].map(x=>x.value)}
+function radio(name){return document.querySelector(`[name="${name}"]:checked`)?.value||'未填寫'}
+function renderSummary(){
+ const lines=[
+ '【病人背景】',
+ '年齡：'+(val('patientAge')==='未填寫'?'未填寫':val('patientAge')+' 歲'),
+ '主要疾病：'+val('diagnosis'),
+ '插管日期：'+val('intubationDate'),
+ '討論日期：'+val('discussionDate'),
+ '醫療團隊提出氣切的原因：'+(checked('reason').join('、')||'未填寫'),
+ '補充說明：'+val('reasonOther'),
+ '',
+ '【家屬理解與考量】',
+ '已確認理解：'+(checked('understand').join('、')||'尚未勾選'),
+ '病人過去意願：'+radio('patientWish'),
+ '病人重視的事情：'+(checked('values').join('、')||'未填寫'),
+ '家屬主要疑慮：'+(checked('concerns').join('、')||'未填寫'),
+ '目前家屬想法：'+radio('preference'),
+ '病人曾表達的想法：'+val('wishDetail'),
+ '',
+ '【想向醫療團隊詢問】',
+ ...(checked('compareQ').length?checked('compareQ').map(x=>'• '+x):['尚未勾選比較問題']),
+ ...(checked('questions').length?checked('questions').map(x=>'• '+x):['尚未勾選提問']),
+ '其他問題：'+val('customQuestions'),
+ '預計再次討論日期：'+val('nextMeeting'),
+ '',
+ '【目前狀態】',
+ '本工具不計算氣切推薦分數。請由病人（若具決策能力）、家屬及醫療團隊共同確認選項、風險、替代方案與下一步。'
+ ];
+ document.getElementById('summaryContent').textContent=lines.join('\n');
+}
+</script>
+</body>
+</html>
