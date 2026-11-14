@@ -358,11 +358,62 @@ function renderSummary(){
  '其他問題：'+val('customQuestions'),
  '預計再次討論日期：'+val('nextMeeting'),
  '',
- '【氣切知識理解題】',
- ...Array.from({length:8},(_,i)=>{
-   const selected=document.querySelector('[name="sdmQ'+(i+1)+'"]:checked');
-   return '3-'+(i+1)+'：'+(selected?selected.value:'尚未作答');
- }),
+ '【氣切知識理解摘要】',
+ ...(()=>{
+   const knowledgeItems = [
+    {
+     concept:'氣切後仍可能在評估後使用發聲閥或其他方式發聲；能否發聲需視上呼吸道通暢、氣切管與氣囊狀態及整體病況而定。',
+     correct:'不對'
+    },
+    {
+     concept:'部分病人在吞嚥功能評估後仍可能經口進食；是否安全需由醫療團隊評估吞嚥及嗆咳風險。',
+     correct:'不對'
+    },
+    {
+     concept:'氣切可能減少經口氣管內管對口腔及咽喉的部分刺激，但不能保證消除所有不適，仍需口腔照護。',
+     correct:'不對'
+    },
+    {
+     concept:'氣切本身不代表必須臥床；活動能力仍取決於原本疾病、體力、意識、呼吸支持需求及復健評估。',
+     correct:'不對'
+    },
+    {
+     concept:'氣切提供直接的人工氣道，可能讓部分病人的抽痰及呼吸道照護較容易；仍需依需要抽痰、清潔與觀察管路。',
+     correct:'對'
+    },
+    {
+     concept:'氣切不保證降低肺炎或死亡風險；感染風險與疾病、吞嚥、咳嗽能力、照護及其他因素有關。',
+     correct:'不對'
+    },
+    {
+     concept:'部分病人可在醫療團隊評估下進行呼吸器脫離訓練；是否成功取決於原發疾病、呼吸肌功能及整體恢復情形。',
+     correct:'對'
+    },
+    {
+     concept:'照護需求因病人狀況、照護機構及可取得的專業支持而不同；家屬不一定要獨自承擔所有照護，但應了解照護安排與資源。',
+     correct:'不對'
+    }
+   ];
+   const understood=[];
+   const needsClarification=[];
+   const unanswered=[];
+   knowledgeItems.forEach((item,i)=>{
+     const selected=document.querySelector('[name="sdmQ'+(i+1)+'"]:checked');
+     if(!selected){unanswered.push('• '+item.concept);return;}
+     if(selected.value===item.correct){understood.push('• '+item.concept);}
+     else {needsClarification.push('• '+item.concept+'（家屬回答：'+selected.value+'）');}
+   });
+   return [
+    '【已理解的正確觀念】',
+    ...(understood.length?understood:['• 目前尚無可確認已理解的題目。']),
+    '',
+    '【需要團隊進一步說明／釐清的觀念】',
+    ...(needsClarification.length?needsClarification:['• 本次作答未顯示明確的錯誤認知。']),
+    '',
+    '【尚未作答，需再確認的觀念】',
+    ...(unanswered.length?unanswered:['• 8 題皆已作答。'])
+   ];
+ })(),
  '',
  '【目前狀態】',
  '本工具不計算氣切推薦分數。請由病人（若具決策能力）、家屬及醫療團隊共同確認選項、風險、替代方案與下一步。'
