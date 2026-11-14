@@ -36,17 +36,54 @@ ul{padding-left:1.25rem;margin:8px 0}li{margin:5px 0}
 .actions{display:flex;justify-content:space-between;gap:10px;margin-top:24px;padding-top:17px;border-top:1px solid var(--line)}
 button.primary,button.secondary{border:0;border-radius:10px;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer}
 button.primary{background:var(--blue);color:white}button.secondary{background:#edf2f5;color:var(--navy)}button:disabled{opacity:.4;cursor:not-allowed}
-.progress{height:7px;background:#e8eef2;border-radius:99px;overflow:hidden;margin:10px 0 20px}.progress span{display:block;height:100%;width:16.66%;background:var(--teal);transition:width .2s}
+.progress{height:7px;background:#e8eef2;border-radius:99px;overflow:hidden;margin:10px 0 20px}.progress span{display:block;height:100%;width:14.28%;background:var(--teal);transition:width .2s}
 .summary{background:#f8fafb;border:1px solid var(--line);border-radius:12px;padding:15px;margin:12px 0;white-space:pre-wrap}
 .small{font-size:.82rem;color:var(--muted)}.tag{display:inline-block;background:#edf3f6;color:#34556b;padding:3px 9px;border-radius:99px;font-size:.78rem;font-weight:700}
 footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem}
 @media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static}.navlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.navbtn{font-size:.88rem;padding:8px}.grid3{grid-template-columns:1fr}}
 @media(max-width:560px){.grid2{grid-template-columns:1fr}.scale{gap:3px}.scale label{font-size:.72rem;padding:7px 2px}.panel{padding:17px}.navlist{grid-template-columns:1fr 1fr}td:first-child{width:28%}table{font-size:.82rem}th,td{padding:8px}}
-@media print{body{background:white}.layout{display:block;margin:0}.layout nav,.actions,header .notice,footer{display:none!important}.panel{display:none!important;box-shadow:none;border:0;padding:0}.panel#step6{display:block!important}header{background:white;color:#173b57;padding:0 0 15px}.wrap{max-width:none}.progress{display:none}}
+@media print{body{background:white}.layout{display:block;margin:0}.layout nav,.actions,header .notice,footer{display:none!important}.panel{display:none!important;box-shadow:none;border:0;padding:0}.panel#step7{display:block!important}header{background:white;color:#173b57;padding:0 0 15px}.wrap{max-width:none}.progress{display:none}}
 
 /* Mobile-first educational illustrations */
 .edu-illustration{display:block;width:100%;height:auto;max-width:760px;border:1px solid var(--line);border-radius:14px;margin:14px auto 18px;background:#f7fbfe}
 .edu-caption{font-size:.82rem;color:var(--muted);margin:-9px 0 16px}
+
+/* SDM knowledge check - compact three-choice row on mobile and tablet */
+.sdm-quiz-card{margin:14px 0}
+.sdm-quiz-card h3{margin:0 0 8px;font-size:1rem;line-height:1.55}
+.sdm-quiz-card .options{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin:9px 0 12px;
+}
+.sdm-quiz-card .option{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  min-height:46px;
+  margin:0;
+  padding:9px 6px;
+  text-align:center;
+  white-space:nowrap;
+  font-size:.92rem;
+}
+.sdm-quiz-card .option input{
+  flex:0 0 auto;
+  width:16px;
+  height:16px;
+  margin:0;
+  accent-color:var(--blue);
+}
+.sdm-feedback[hidden]{display:none}
+.sdm-feedback .callout{font-size:.92rem}
+@media(max-width:360px){
+  .sdm-quiz-card .options{gap:5px}
+  .sdm-quiz-card .option{gap:4px;padding:8px 3px;font-size:.84rem}
+  .sdm-quiz-card .option input{width:14px;height:14px}
+}
 </style>
 </head>
 <body>
@@ -66,9 +103,10 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
   <button class="navbtn active" data-step="1"><span class="num">1</span>我現在面臨什麼問題</button>
   <button class="navbtn" data-step="2"><span class="num">2</span>認識氣切</button>
   <button class="navbtn" data-step="3"><span class="num">3</span>比較可能選項</button>
-  <button class="navbtn" data-step="4"><span class="num">4</span>病人與家屬在意什麼</button>
-  <button class="navbtn" data-step="5"><span class="num">5</span>想問醫療團隊的問題</button>
-  <button class="navbtn" data-step="6"><span class="num">6</span>共同決策摘要</button>
+  <button class="navbtn" data-step="4"><span class="num">4</span>氣切知識理解</button>
+  <button class="navbtn" data-step="5"><span class="num">5</span>病人與家屬在意什麼</button>
+  <button class="navbtn" data-step="6"><span class="num">6</span>想問醫療團隊的問題</button>
+  <button class="navbtn" data-step="7"><span class="num">7</span>共同決策摘要</button>
  </div>
  <p class="small">可隨時返回修改答案。未填寫的題目不會被視為否定或同意。</p>
 </nav>
@@ -143,12 +181,100 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
  >
  <div class="actions">
   <button class="secondary" onclick="go(2)">← 上一步</button>
-  <button class="primary" onclick="go(4)">下一步：想想我們重視什麼 →</button>
+  <button class="primary" onclick="go(4)">下一步：氣切知識理解 → →</button>
  </div>
 </section>
 
+
 <section class="panel" id="step4">
- <div class="eyebrow">STEP 04 · WHAT MATTERS TO US</div><h2>病人與家屬最在意什麼？</h2>
+ <div class="eyebrow">STEP 04 · CHECK YOUR UNDERSTANDING</div>
+ <h2>氣切知識理解：我了解多少？</h2>
+ <p class="lead">以下題目協助您確認對氣切後生活與照護的理解。請依目前認知作答；選擇「不知道」也完全可以，系統會提供說明。</p>
+ <div class="callout gold"><strong>請先知道：</strong>這不是考試，也不會依答題結果判斷病人是否應接受氣切。每位病人的說話、進食、活動及呼吸器脫離可能性都不同，仍需個別評估。</div>
+
+ <article class="card sdm-quiz-card" data-question="1" data-correct="不對">
+  <h3>3-1｜接受氣切後，就絕對無法說話。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ1" value="對" onchange="showQuizFeedback(1)">對</label><label class="option"><input type="radio" name="sdmQ1" value="不對" onchange="showQuizFeedback(1)">不對</label><label class="option"><input type="radio" name="sdmQ1" value="不知道" onchange="showQuizFeedback(1)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback1" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：不對</strong><br>部分病人經評估後，可能使用發聲閥或其他方式發聲；能否發聲取決於上呼吸道通暢程度、氣切管與氣囊狀態及整體病況。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="2" data-correct="不對">
+  <h3>3-2｜接受氣切後，就絕對無法經口進食。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ2" value="對" onchange="showQuizFeedback(2)">對</label><label class="option"><input type="radio" name="sdmQ2" value="不對" onchange="showQuizFeedback(2)">不對</label><label class="option"><input type="radio" name="sdmQ2" value="不知道" onchange="showQuizFeedback(2)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback2" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：不對</strong><br>部分病人在吞嚥功能評估後仍可能經口進食；是否安全需由醫療團隊依吞嚥與嗆咳風險個別評估。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="3" data-correct="不對">
+  <h3>3-3｜接受氣切後，就能避免所有口腔及咽喉不適。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ3" value="對" onchange="showQuizFeedback(3)">對</label><label class="option"><input type="radio" name="sdmQ3" value="不對" onchange="showQuizFeedback(3)">不對</label><label class="option"><input type="radio" name="sdmQ3" value="不知道" onchange="showQuizFeedback(3)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback3" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：不對</strong><br>氣切可能減少經口氣管內管對口腔及咽喉的部分刺激，但不能保證消除所有不適，也仍需口腔照護。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="4" data-correct="不對">
+  <h3>3-4｜接受氣切後，就必須一直臥床。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ4" value="對" onchange="showQuizFeedback(4)">對</label><label class="option"><input type="radio" name="sdmQ4" value="不對" onchange="showQuizFeedback(4)">不對</label><label class="option"><input type="radio" name="sdmQ4" value="不知道" onchange="showQuizFeedback(4)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback4" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：不對</strong><br>氣切本身不代表必須臥床。活動能力取決於原本疾病、體力、意識、呼吸支持需求及復健評估。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="5" data-correct="對">
+  <h3>3-5｜氣切可能有助於部分病人的呼吸道分泌物處理。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ5" value="對" onchange="showQuizFeedback(5)">對</label><label class="option"><input type="radio" name="sdmQ5" value="不對" onchange="showQuizFeedback(5)">不對</label><label class="option"><input type="radio" name="sdmQ5" value="不知道" onchange="showQuizFeedback(5)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback5" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：對</strong><br>氣切提供直接的人工氣道，可能讓抽痰及呼吸道照護較容易；仍需依需要抽痰、清潔與觀察管路。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="6" data-correct="不對">
+  <h3>3-6｜接受氣切後，就一定可以降低肺炎發生率及死亡率。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ6" value="對" onchange="showQuizFeedback(6)">對</label><label class="option"><input type="radio" name="sdmQ6" value="不對" onchange="showQuizFeedback(6)">不對</label><label class="option"><input type="radio" name="sdmQ6" value="不知道" onchange="showQuizFeedback(6)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback6" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：不對</strong><br>氣切不保證降低肺炎或死亡風險。感染風險與疾病、吞嚥、咳嗽能力、照護及其他因素有關。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="7" data-correct="對">
+  <h3>3-7｜接受氣切後，部分病人可以進行呼吸器脫離訓練。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ7" value="對" onchange="showQuizFeedback(7)">對</label><label class="option"><input type="radio" name="sdmQ7" value="不對" onchange="showQuizFeedback(7)">不對</label><label class="option"><input type="radio" name="sdmQ7" value="不知道" onchange="showQuizFeedback(7)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback7" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：對</strong><br>部分病人可在醫療團隊評估下進行呼吸器脫離訓練；是否成功取決於原發疾病、呼吸肌功能及整體恢復情形。
+   </div>
+  </div>
+ </article>
+ <article class="card sdm-quiz-card" data-question="8" data-correct="不對">
+  <h3>3-8｜接受氣切後，所有病人都需要家屬全天候親自照護。</h3>
+  <div class="options"><label class="option"><input type="radio" name="sdmQ8" value="對" onchange="showQuizFeedback(8)">對</label><label class="option"><input type="radio" name="sdmQ8" value="不對" onchange="showQuizFeedback(8)">不對</label><label class="option"><input type="radio" name="sdmQ8" value="不知道" onchange="showQuizFeedback(8)">不知道</label></div>
+  <div class="sdm-feedback" id="feedback8" hidden>
+   <div class="callout" style="margin:8px 0">
+    <strong>正確答案：不對</strong><br>照護需求因病人狀況、照護機構及可取得的專業支持而不同。家屬不一定要獨自承擔所有照護，但應了解照護安排與資源。
+   </div>
+  </div>
+ </article>
+ <div class="callout">
+  <strong>完成後請留意：</strong>若有答題後仍不清楚的內容，可以在下一步將問題帶給醫師、呼吸治療師或護理師討論。
+ </div>
+ <div class="actions">
+  <button class="secondary" onclick="go(3)">← 上一步</button>
+  <button class="primary" onclick="go(5)">下一步：想想我們重視什麼 →</button>
+ </div>
+</section>
+
+<section class="panel" id="step5">
+ <div class="eyebrow">STEP 05 · WHAT MATTERS TO US</div><h2>病人與家屬最在意什麼？</h2>
  <p class="lead">這裡沒有標準答案。請依您所了解的病人想法回答；若不清楚，可以選擇「不知道／尚未討論」。</p>
  <label>1. 病人過去是否曾表達對氣切、長期呼吸器或生活品質的想法？</label>
  <div class="options"><label class="option"><input type="radio" name="patientWish" value="曾明確表達，內容已知">曾明確表達，內容已知</label><label class="option"><input type="radio" name="patientWish" value="曾談過，但不確定意思">曾談過，但不確定意思</label><label class="option"><input type="radio" name="patientWish" value="沒有談過／不知道">沒有談過／不知道</label></div>
@@ -160,11 +286,11 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
  <label>4. 目前您對氣切的想法</label>
  <div class="options"><label class="option"><input type="radio" name="preference" value="傾向接受氣切">傾向接受氣切</label><label class="option"><input type="radio" name="preference" value="傾向暫不接受氣切">傾向暫不接受氣切</label><label class="option"><input type="radio" name="preference" value="尚未決定，需要更多資訊">尚未決定，需要更多資訊</label><label class="option"><input type="radio" name="preference" value="需要與病人／家人／醫療團隊再討論">需要與病人／家人／醫療團隊再討論</label></div>
  <div class="callout">家屬可以有自己的擔心與感受，但若病人具備決策能力，應以病人充分理解後的自主意願為核心。若病人目前無法表達，請與醫療團隊討論其過去意願、價值觀及適用的代理決策程序。</div>
- <div class="actions"><button class="secondary" onclick="go(3)">← 上一步</button><button class="primary" onclick="go(5)">下一步：整理要問的問題 →</button></div>
+ <div class="actions"><button class="secondary" onclick="go(4)">← 上一步</button><button class="primary" onclick="go(6)">下一步：整理要問的問題 →</button></div>
 </section>
 
-<section class="panel" id="step5">
- <div class="eyebrow">STEP 05 · QUESTIONS FOR THE CARE TEAM</div><h2>我想問醫師或 RT 的問題</h2>
+<section class="panel" id="step6">
+ <div class="eyebrow">STEP 06 · QUESTIONS FOR THE CARE TEAM</div><h2>我想問醫師或 RT 的問題</h2>
  <p class="lead">您不需要一次弄懂所有醫療資訊。可以把不清楚的地方記下來，帶到下一次家庭會議或醫療團隊討論。</p>
  <div class="options">
   <label class="option"><input type="checkbox" name="questions" value="為什麼現在建議討論氣切？">為什麼現在建議討論氣切？是否有時間上的急迫性？</label>
@@ -178,26 +304,36 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
  <label for="customQuestions">其他想詢問的問題</label><textarea id="customQuestions" placeholder="請輸入您自己的問題……"></textarea>
  <label for="nextMeeting">預計再次討論日期（可不填）</label><input id="nextMeeting" type="date">
  <div class="callout gold">若醫療團隊認為需要在短時間內決定，請直接詢問決策期限、原因，以及是否有安全的討論時間。不要因為填寫本工具而延誤必要的醫療溝通。</div>
- <div class="actions"><button class="secondary" onclick="go(4)">← 上一步</button><button class="primary" onclick="go(6);renderSummary()">產生共同決策摘要 →</button></div>
+ <div class="actions"><button class="secondary" onclick="go(5)">← 上一步</button><button class="primary" onclick="go(7);renderSummary()">產生共同決策摘要 →</button></div>
 </section>
 
-<section class="panel" id="step6">
- <div class="eyebrow">STEP 06 · SHARED DECISION SUMMARY</div><h2>我們目前的共同決策摘要</h2>
+<section class="panel" id="step7">
+ <div class="eyebrow">STEP 07 · SHARED DECISION SUMMARY</div><h2>我們目前的共同決策摘要</h2>
  <p class="lead">這份摘要協助家屬與醫療團隊確認彼此理解，不是手術同意書、醫囑或自動推薦結果。</p>
  <div id="summaryContent" class="summary">請按下方「更新摘要」整理目前填寫的內容。</div>
  <div class="callout"><strong>下一步：</strong>請將這份摘要帶給醫師及 RT 討論，確認病人的個別風險、替代方案、決策期限及後續計畫。若資訊仍不足，選擇「尚未決定」也是可以被尊重的狀態。</div>
- <div class="actions"><button class="secondary" onclick="go(5)">← 返回修改</button><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderSummary()">更新摘要</button><button class="primary" onclick="window.print()">列印／另存 PDF</button></div></div>
+ <div class="actions"><button class="secondary" onclick="go(6)">← 返回修改</button><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderSummary()">更新摘要</button><button class="primary" onclick="window.print()">列印／另存 PDF</button></div></div>
 </section>
 </main>
 </div>
 <footer>家屬氣切決策輔助平台 · 教育與溝通用途 · V1.0 Prototype<br>請勿輸入病人姓名、病歷號碼或其他可識別個人身分的資料。此原型不會將答案上傳或儲存至伺服器。</footer>
 <script>
 let current=1;
-function go(n){current=n;document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='step'+n));document.querySelectorAll('.navbtn').forEach(b=>{let s=+b.dataset.step;b.classList.toggle('active',s===n);b.classList.toggle('done',s<n)});document.getElementById('progressBar').style.width=(n/6*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
+function go(n){current=n;document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='step'+n));document.querySelectorAll('.navbtn').forEach(b=>{let s=+b.dataset.step;b.classList.toggle('active',s===n);b.classList.toggle('done',s<n)});document.getElementById('progressBar').style.width=(n/7*100)+'%';window.scrollTo({top:0,behavior:'smooth'});}
 document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.step)));
 function val(id){return document.getElementById(id)?.value?.trim()||'未填寫'}
 function checked(name){return [...document.querySelectorAll(`[name="${name}"]:checked`)].map(x=>x.value)}
 function radio(name){return document.querySelector(`[name="${name}"]:checked`)?.value||'未填寫'}
+function showQuizFeedback(index){
+ const card=document.querySelector('.sdm-quiz-card[data-question="'+index+'"]');
+ const selected=document.querySelector('[name="sdmQ'+index+'"]:checked');
+ const feedback=document.getElementById('feedback'+index);
+ if(!card || !selected || !feedback) return;
+ feedback.hidden=false;
+ const correct=card.dataset.correct;
+ const callout=feedback.querySelector('.callout');
+ callout.style.borderLeft='4px solid '+(selected.value===correct?'#287d78':'#a86e19');
+}
 function renderSummary(){
  const lines=[
  '【病人背景】',
@@ -221,6 +357,12 @@ function renderSummary(){
  ...(checked('questions').length?checked('questions').map(x=>'• '+x):['尚未勾選提問']),
  '其他問題：'+val('customQuestions'),
  '預計再次討論日期：'+val('nextMeeting'),
+ '',
+ '【氣切知識理解題】',
+ ...Array.from({length:8},(_,i)=>{
+   const selected=document.querySelector('[name="sdmQ'+(i+1)+'"]:checked');
+   return '3-'+(i+1)+'：'+(selected?selected.value:'尚未作答');
+ }),
  '',
  '【目前狀態】',
  '本工具不計算氣切推薦分數。請由病人（若具決策能力）、家屬及醫療團隊共同確認選項、風險、替代方案與下一步。'
