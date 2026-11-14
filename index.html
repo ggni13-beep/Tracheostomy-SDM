@@ -117,38 +117,54 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
 </section>
 
 
+
 <section class="panel" id="step3">
- <style>
- .trach-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
- .trach-option{border:1px solid #dce5eb;border-radius:15px;overflow:hidden;background:#fff}
- .trach-option.trach-left{background:#f0f7ff;border-color:#c9e0f5}
- .trach-option.trach-right{background:#f6f1ff;border-color:#ded0f4}
- .trach-option-title{text-align:center;padding:12px 8px;font-weight:800;color:white;font-size:1rem}
- .trach-left .trach-option-title{background:#287fc0}
- .trach-right .trach-option-title{background:#7953ad}
- .trach-visual{padding:10px 12px 4px}
- .trach-visual svg{display:block;width:100%;height:auto;max-width:340px;margin:auto}
- .trach-points{padding:5px 14px 14px}
- .trach-point{display:flex;gap:9px;padding:9px 0;border-top:1px solid rgba(100,120,150,.18);font-size:.9rem;line-height:1.55}
- .trach-point:first-child{border-top:0}
- .trach-icon{font-size:1.25rem;flex:none}
- .trach-table-wrap{overflow-x:auto;margin-top:18px}
- .trach-table{width:100%;border-collapse:collapse;min-width:0;font-size:.9rem}
- .trach-table th,.trach-table td{border:1px solid #d5e1e9;padding:11px;text-align:left;vertical-align:top}
- .trach-table th{background:#eaf2f7;color:#173b57}
- .trach-table th:nth-child(2){background:#287fc0;color:white}
- .trach-table th:nth-child(3){background:#7953ad;color:white}
- .trach-table td:first-child{font-weight:700;width:22%}
- .trach-reminder{background:#fff5df;border-radius:12px;padding:13px 15px;margin-top:15px;color:#674919;font-size:.9rem}
- @media(max-width:560px){
-   .trach-compare{grid-template-columns:1fr;gap:14px}
-   .trach-option-title{font-size:1.05rem}
-   .trach-visual svg{max-width:290px}
-   .trach-table{font-size:.78rem}
-   .trach-table th,.trach-table td{padding:8px}
-   .trach-table td:first-child{width:23%}
- }
- </style>
+
+  <div class="eyebrow">STEP 03 · COMPARE OPTIONS</div>
+
+  <h2>接受氣切與暫不氣切，有什麼不同？</h2>
+
+  <p class="lead">
+    以下是一般性資訊，並非每位病人都適用。
+    請醫療團隊依病況說明「暫不氣切」實際可行的替代方案。
+  </p>
+
+  <style>
+    .step3-original-image {
+      display: block;
+      width: 100%;
+      max-width: 760px;
+      height: auto;
+      margin: 18px auto;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .step3-original-image {
+        width: 100%;
+        border-radius: 8px;
+      }
+    }
+  </style>
+
+  <img
+    class="step3-original-image"
+    src="assets/step3-comparison.png"
+    alt="接受氣切與經口氣管內管比較衛教圖"
+  >
+
+  <div class="actions">
+    <button class="secondary" onclick="go(2)">
+      ← 上一步
+    </button>
+
+    <button class="primary" onclick="go(4)">
+      下一步：想想我們重視什麼 →
+    </button>
+  </div>
+
+</section>
+
 
  <div class="eyebrow">STEP 03 · COMPARE OPTIONS</div>
  <h2>接受氣切與暫不氣切，有什麼不同？</h2>
