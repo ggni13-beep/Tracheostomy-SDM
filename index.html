@@ -128,7 +128,7 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
   <label class="option"><input type="checkbox" name="reason" value="需要協助清除呼吸道分泌物">需要協助清除呼吸道分泌物</label>
   <label class="option"><input type="checkbox" name="reason" value="其他或尚未清楚">其他或尚未清楚</label>
  </div>
- <label for="reasonOther">醫療團隊的說明／我還不清楚的地方</label><textarea id="reasonOther" placeholder="請記下醫師或 RT 的說明，也可以先留白。"></textarea>
+ <label for="reasonOther">醫療團隊的說明／我還不清楚的地方</label><textarea id="reasonOther" placeholder="請記下醫師或護理師 的說明，也可以先留白。"></textarea>
  <div class="callout gold"><strong>請務必向醫療團隊確認：</strong>目前是否仍有機會移除氣管內管？如果暫時不氣切，短期與接下來的人工氣道計畫是什麼？</div>
  <div class="actions"><span></span><button class="primary" onclick="go(2)">下一步：認識氣切 →</button></div>
 </section>
@@ -265,7 +265,7 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
   </div>
  </article>
  <div class="callout">
-  <strong>完成後請留意：</strong>若有答題後仍不清楚的內容，可以在下一步將問題帶給醫師、呼吸治療師或護理師討論。
+  <strong>完成後請留意：</strong>若有答題後仍不清楚的內容，可以在下一步將問題帶給醫師、護理師或護理師討論。
  </div>
  <div class="actions">
   <button class="secondary" onclick="go(3)">← 上一步</button>
@@ -290,7 +290,7 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
 </section>
 
 <section class="panel" id="step6">
- <div class="eyebrow">STEP 06 · QUESTIONS FOR THE CARE TEAM</div><h2>我想問醫師或 RT 的問題</h2>
+ <div class="eyebrow">STEP 06 · QUESTIONS FOR THE CARE TEAM</div><h2>我想問醫師或護理師 的問題</h2>
  <p class="lead">您不需要一次弄懂所有醫療資訊。可以把不清楚的地方記下來，帶到下一次家庭會議或醫療團隊討論。</p>
  <div class="options">
   <label class="option"><input type="checkbox" name="questions" value="為什麼現在建議討論氣切？">為什麼現在建議討論氣切？是否有時間上的急迫性？</label>
@@ -311,7 +311,7 @@ footer{padding:0 18px 35px;text-align:center;color:var(--muted);font-size:.82rem
  <div class="eyebrow">STEP 07 · SHARED DECISION SUMMARY</div><h2>我們目前的共同決策摘要</h2>
  <p class="lead">這份摘要協助家屬與醫療團隊確認彼此理解，不是手術同意書、醫囑或自動推薦結果。</p>
  <div id="summaryContent" class="summary">請按下方「更新摘要」整理目前填寫的內容。</div>
- <div class="callout"><strong>下一步：</strong>請將這份摘要帶給醫師及 RT 討論，確認病人的個別風險、替代方案、決策期限及後續計畫。若資訊仍不足，選擇「尚未決定」也是可以被尊重的狀態。</div>
+ <div class="callout"><strong>下一步：</strong>請將這份摘要帶給醫師及護理師 討論，確認病人的個別風險、替代方案、決策期限及後續計畫。若資訊仍不足，選擇「尚未決定」也是可以被尊重的狀態。</div>
  <div class="actions"><button class="secondary" onclick="go(6)">← 返回修改</button><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderSummary()">更新摘要</button><button class="primary" onclick="window.print()">列印／另存 PDF</button></div></div>
 </section>
 </main>
